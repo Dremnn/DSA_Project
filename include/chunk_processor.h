@@ -67,24 +67,27 @@ public:
             bytesRead += 6;
             
             if (buffer.size() >= m_chunkSize) {
+                // 1. Show RAM Peak before extract
                 float progress = (float)bytesRead / (fileSize > 0 ? fileSize : 1);
-                
                 drawProgressBar(progress, "Sorting (PEAK)");
                 sleep_ms(50);
-                
+
+                // 2. Sort n Write
                 m_sorter.heapSort(buffer);
-                
                 string chunkName = m_tempDir + "chunk_" + to_string(chunkCount++) + ".txt";
                 writeChunk(buffer, chunkName);
                 chunkFiles.push_back(chunkName);
-                
+
+                // 3. Extract RAM
                 buffer.clear();
-                buffer.shrink_to_fit();
-                
+                buffer.shrink_to_fit();    // ...
+
+                // 4. Show RAM Drop after extract
                 drawProgressBar(progress, "Sorting (DROP)");
             }
         }
-        
+
+        // Processing remain chunks
         if (!buffer.empty()) {
             m_sorter.heapSort(buffer);
             string chunkName = m_tempDir + "chunk_" + to_string(chunkCount++) + ".txt";
