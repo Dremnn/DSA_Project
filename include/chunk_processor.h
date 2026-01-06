@@ -96,7 +96,7 @@ public:
         }
         
         drawProgressBar(1.0, "Completed");
-        cout << "\n" << GREEN << "✓ Created " << chunkFiles.size() 
+        cout << "\n" << GREEN << "-> Created " << chunkFiles.size() 
              << " sorted chunks" << RESET << endl;
         
         return chunkFiles;

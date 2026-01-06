@@ -37,7 +37,7 @@ public:
         drawProgressBar(1.0, "Generating");
         outFile.close();
         
-        cout << "\n" << GREEN << "✓ Created file: " << filename 
+        cout << "\n" << GREEN << "-> Created file: " << filename 
              << " (" << count << " integers)" << RESET << endl;
     }
 

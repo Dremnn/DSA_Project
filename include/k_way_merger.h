@@ -104,7 +104,7 @@ public:
         outFile.close();
         streams.clear();
         
-        cout << "\n" << GREEN << "✓ Merge Complete!" << RESET << endl;
+        cout << "\n" << GREEN << "-> Merge Complete!" << RESET << endl;
         
         if (cleanupChunks) {
             string tempDir = sortedChunks[0].substr(0, sortedChunks[0].find_last_of("/\\") + 1);
