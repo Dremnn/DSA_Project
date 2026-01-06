@@ -11,7 +11,7 @@ using namespace TerminalUI;
 // ==========================================
 // CONFIGURATION
 // ==========================================
-const int DATA_SIZE = 500000;           // 500k integers ~ 2MB file
+const int DATA_SIZE = 500000;           // 500k integers
 const size_t CHUNK_SIZE = 10000;        // 10k integers per chunk
 const string INPUT_FILE = "input_large.txt";
 const string OUTPUT_FILE = "sorted_output.txt";
@@ -28,17 +28,16 @@ int main() {
     cout << "   " << CYAN << "Algorithm:" << RESET << " External Merge Sort\n";
     cout << "   " << CYAN << "Features:" << RESET << " Real-time RAM monitoring\n";
     cout << "\n   " << YELLOW << "Roles Distribution:" << RESET << "\n";
-    cout << "   - Role 1: Chunk Processor (Split large file)\n";
-    cout << "   - Role 2: Heap Sorter (Sort chunks in RAM)\n";
-    cout << "   - Role 3: Data Generator + K-Way Merger\n";
+    cout << "\t24110098 - Ly Tran Gia Khang: Chunk Processor (Split large file)\n";
+    cout << "\t24110151 - Nguyen Dang Vuong: Heap Sorter (Sort chunks in RAM)\n";
+    cout << "\t24110140 - Doan Trong Trung: K-Way Merger\n";
     
     // ===== STEP 1: GENERATE TEST DATA =====
     waitForEnter();
     DataGenerator::generateFile(INPUT_FILE, DATA_SIZE);
-    
     auto startTime = chrono::high_resolution_clock::now();
     
-    // ===== STEP 2: CHUNK & SORT (ROLE 1 + ROLE 2) =====
+    // ===== STEP 2: CHUNK & SORT (Khang + Vuong) =====
     waitForEnter();
     ChunkProcessor processor(CHUNK_SIZE, TEMP_DIR);
     vector<string> sortedChunks = processor.processFile(INPUT_FILE);
@@ -48,7 +47,7 @@ int main() {
         return 1;
     }
     
-    // ===== STEP 3: MERGE (ROLE 3) =====
+    // ===== STEP 3: MERGE (Trung) =====
     waitForEnter();
     KWayMerger merger;
     merger.merge(sortedChunks, OUTPUT_FILE, true);
@@ -58,14 +57,13 @@ int main() {
     
     // ===== STEP 4: VERIFY & REPORT =====
     printHeader("VERIFICATION & REPORT");
-    
     cout << CYAN << "Verifying output..." << RESET << endl;
     bool isValid = merger.verifyOutput(OUTPUT_FILE);
     
     if (isValid) {
-        cout << GREEN << "✓ Output is correctly sorted!" << RESET << "\n\n";
+        cout << GREEN << "-> [RIGHT] Output is correctly sorted!" << RESET << "\n\n";
     } else {
-        cout << RED << "✗ Output is NOT sorted correctly!" << RESET << "\n\n";
+        cout << RED << "-> [WRONG] Output is NOT sorted correctly!" << RESET << "\n\n";
     }
     
     // Statistics
@@ -77,8 +75,8 @@ int main() {
     printStat("Time Complexity", "O(N log N)");
     printStat("Space Complexity", "O(CHUNK_SIZE)");
     
-    cout << "\n" << YELLOW << "📄 Output file: " << OUTPUT_FILE << RESET << endl;
-    cout << GREEN << "✓ Program completed successfully!" << RESET << endl;
+    cout << "\n" << YELLOW << "Output file: " << OUTPUT_FILE << RESET << endl;
+    cout << GREEN << "-> Program completed successfully!" << RESET << endl;
     cout << "\n";
     
     return 0;
